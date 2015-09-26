@@ -1,29 +1,130 @@
+var express = require('express');
+var path = require('path');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var config = require('./config/config');
+var fs = require('fs');
+var expressJwt = require('express-jwt');
 
-var User, app, express, fs, mongoose, passport;
 
-express = require('express');
-passport = require('passport');
-mongoose = require('mongoose');
-fs = require('fs');
+if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'development';
+}
 
-app = express();
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.cookieParser());
-app.use(express.session({
-  secret: 'madoka'
+var app = express();
+
+//Connect database with mongoDB
+mongoose.connect(config.Env[process.env.NODE_ENV].Database);
+
+//Bootstrap models
+fs.readdirSync('./models').forEach(function(file) {
+    if (~file.indexOf('.js')) {
+        require('./models/' + file);
+    }
+});
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use('/*', expressJwt({
+    secret: config.JWTSecret
+}).unless({
+    path: ['/users/login', '/users/logout', '/users/signup']
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+// CORS
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE, CONNECT');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Max-Age', '86400'); // 24 hours
 
-require('./controllers')(app);
+    // Intercept OPTIONS method
+    if (req.method === 'OPTIONS') {
+        res.sendStatus(200);
+    } else {
+        next();
+    }
+});
 
-User = mongoose.model('User');
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+// uncomment after placing your favicon in /public
+//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-mongoose.connect('mongodb://localhost/daily-scrum');
-app.listen(3001);
-console.log('Listening on port 3001...');
+// Bootstrap models
+fs.readdirSync('./models').forEach(function(file) {
+    if (~file.indexOf('.js')) {
+        require('./models/' + file);
+    }
+});
+
+var users = require('./routes/users');
+
+app.use('/users', users);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    return res.status(404).json({
+        'statusCode': 404,
+        'success': false,
+        'message': 'Route not found',
+        'data': {}
+    });
+});
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        console.log('***********');
+        console.log(err);
+        if (err.constructor.name === 'UnauthorizedError') {
+            res.status(401).jsonp({
+                'statusCode': 401,
+                'success': false,
+                'message': err.message,
+                'data': {}
+            });
+        } else {
+            return res.status(err.status || 500).json({
+                'statusCode': err.status || 500,
+                'success': false,
+                'message': err.message ? err.message : 'Server error',
+                'data': {}
+            });
+        }
+    });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    if (err.constructor.name === 'UnauthorizedError') {
+        res.status(401).jsonp({
+            'statusCode': 401,
+            'success': false,
+            'message': err.message,
+            'data': {}
+        });
+    } else {
+        return res.status(err.status || 500).json({
+            'statusCode': 404,
+            'success': false,
+            'message': 'Route not found',
+            'data': {}
+        });
+    }
+});
+
+
+module.exports = app;
