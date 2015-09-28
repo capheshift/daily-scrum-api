@@ -1,10 +1,10 @@
 module.exports = {
     'Env': {
         'development': {
-            'Database': 'mongodb://127.0.0.1/Daily-Scrum'
+            'Database': 'mongodb://nvs2394:son231994@ds051843.mongolab.com:51843/nvs2394'
         },
         'production': {
-            'Database': 'mongodb://127.0.0.1/Daily-Scrum'
+            'Database': 'mongodb://nvs2394:son231994@ds051843.mongolab.com:51843/nvs2394'
         }
     },
 
