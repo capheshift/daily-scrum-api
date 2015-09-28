@@ -14,9 +14,9 @@ if (!process.env.NODE_ENV) {
 }
 
 var app = express();
-var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/nvs2394';
+var uri = 'mongodb://nvs2394:son231994@ds051843.mongolab.com:51843/heroku_gl956tkn';
 //Connect database with mongoDB
-mongoose.connect(mongoUri);
+mongoose.connect(config.Env[process.env.NODE_ENV].Database);
 
 //Bootstrap models
 fs.readdirSync('./models').forEach(function(file) {
