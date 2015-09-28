@@ -16,7 +16,7 @@ if (!process.env.NODE_ENV) {
 var app = express();
 
 //Connect database with mongoDB
-mongoose.connect(config.Env[process.env.NODE_ENV].Database);
+mongoose.connect(config.Env[process.env.MONGOLAB_URI].Database);
 
 //Bootstrap models
 fs.readdirSync('./models').forEach(function(file) {

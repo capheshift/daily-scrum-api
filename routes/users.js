@@ -5,7 +5,9 @@ var middleware = require('../config/middleware');
 
 /*GET*/
 router.get('/getUserById/:leanUserId',UsersController.getUserById);
-
+router.get('/',function(req,res){
+	res.jsonp('Nguyen van son');
+});
 /*POST*/
 router.post('/signup',UsersController.signup);
 router.post('/login',UsersController.login);
