@@ -1,7 +1,9 @@
-var Schema, UserSchema, mongooes, passportLocal;
-mongooes = require('mongoose');
-passportLocal = require('passport-local-mongoose');
-Schema = mongooes.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var Crypto = require('crypto');
+var Utilities = require('../config/utilities');
+var Config = require('../config/config');
+var async = require('async');
 
 var validateUserName = function(value, callback) {
     return callback(value && (value.length >= 3) && (value.length <= 32));
@@ -22,19 +24,24 @@ var validatePassword = function(value, callback) {
     return callback(value && value.length);
 };
 
-UserSchema = new Schema({
+var UserSchema = new Schema({
     userName: {
         type: String,
         unique: true,
         require: true,
-        trim:true,
-        validate:[validateUserName,'Username must be 3-32 characters']
+        trim: true,
+        validate: [validateUserName, 'Username must be 3-32 characters']
     },
     email: {
         type: String,
         unique: true,
         match: [emailRegex, 'Please enter a valid email'],
         validate: [validateUniqueEmail, 'E-mail address is already in-use']
+    },
+    hashed_password: {
+        type: String,
+        require: true,
+        validate: [validatePassword, 'Password cannot be blank']
     },
     firstName: {
         type: String
@@ -55,8 +62,54 @@ UserSchema = new Schema({
     createdDate: {
         type: Date,
         defaults: Date.now
-    }
+    },
+    salt: String
+}, {
+    collection: ' users'
 });
 
-UserSchema.plugin(passportLocal);
-module.exports = mongooes.model('Users', UserSchema);
+UserSchema.virtual('password').set(function(password) {
+    this._password = password;
+    this.salt = this.makeSalt();
+    this.hashed_password = this.hashPassword(password, this.salt);
+}).get(function() {
+    return this._password;
+});
+
+// Encrypt password
+function encrypt(password, salt) {
+    var saltHash = new Buffer(salt, 'base64');
+    return Crypto.pbkdf2Sync(password, saltHash, 10000, 64).toString('base64');
+}
+
+//Document methods
+UserSchema.methods = {
+    makeSalt: function() {
+        return Crypto.randomBytes(16).toString('base64');
+    },
+    hashPassword: function(password, salt) {
+        if (!password || !salt) {
+            return '';
+        }
+        return encrypt(password, salt);
+    },
+    checkLogin: function(password) {
+        return (encrypt(password, this.salt) === this.hashed_password);
+    }
+};
+
+//Pre-save hook
+UserSchema.pre('save', function(next) {
+    if (this.isNew) {
+        this._isNew = true;
+    }
+    next();
+});
+
+//Post-remove hook
+UserSchema.post('remove', function(user) {
+    console.log('Removed user ' + user._id);
+});
+
+//UserSchema.plugin(passportLocal);
+module.exports = mongoose.model('Users', UserSchema);

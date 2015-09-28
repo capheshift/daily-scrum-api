@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var UsersController = require('../controllers/users');
+var middleware = require('../config/middleware');
 
 /*GET*/
 router.get('/getUserById/:leanUserId',UsersController.getUserById);
@@ -14,5 +15,7 @@ router.post('logout',UsersController.logout);
 router.put('/changePassword/:userId',UsersController.changePassword);
 
 /*DELETE*/
+router.param('leanUserId',UsersController.queryLeanUser);//Lean
+router.param('userId',UsersController.queryUser);
 
 module.exports = router;

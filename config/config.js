@@ -14,10 +14,7 @@ module.exports = {
         'Types': {
             'Local': 1,
             'Facebook': 2,
-            'Google': 3,
-            'Twitter': 4,
-            'LinkedIn': 5,
-            'Yahoo': 6
+            'Google': 3
         },
 
         'Role': {
