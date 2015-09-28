@@ -14,7 +14,7 @@ if (!process.env.NODE_ENV) {
 }
 
 var app = express();
-var uri = 'mongodb://nvs2394:son231994@ds051843.mongolab.com:51843/heroku_gl956tkn';
+
 //Connect database with mongoDB
 mongoose.connect(config.Env[process.env.NODE_ENV].Database);
 

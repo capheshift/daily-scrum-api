@@ -1,10 +1,10 @@
 module.exports = {
     'Env': {
         'development': {
-            'Database': 'mongodb://127.0.0.1/Daily-Scrum'
+            'Database': 'mongodb://heroku_gl956tkn:812b5uooreqmh28r0p7uldnui9@ds051843.mongolab.com:51843/heroku_gl956tkn'
         },
         'production': {
-            'Database': 'mongodb://127.0.0.1/Daily-Scrum'
+            'Database': 'mongodb://heroku_gl956tkn:812b5uooreqmh28r0p7uldnui9@ds051843.mongolab.com:51843/heroku_gl956tkn'
         }
     },
 
