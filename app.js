@@ -16,7 +16,7 @@ if (!process.env.NODE_ENV) {
 var app = express();
 
 //Connect database with mongoDB
-mongoose.connect(config.Env[process.env.MONGOLAB_URI].Database);
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/daily-scrum-api');
 
 //Bootstrap models
 fs.readdirSync('./models').forEach(function(file) {
