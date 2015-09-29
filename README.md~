@@ -5,9 +5,7 @@
 
 ```sh
 $ npm install
-$ nodemon server.js
-
-or node server.js
+$ nodemon app.js
 ```
 
 ## License
