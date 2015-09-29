@@ -16,7 +16,9 @@ if (!process.env.NODE_ENV) {
 var app = express();
 
 //Connect database with mongoDB
-mongoose.connect('mongodb://' + process.env.MONGOLAB_URI + '/daily-scrum-api');
+app.configure('production', function() {
+  mongoose.connect('mongodb://' + process.env.MONGOLAB_URI + '/daily-scrum-api');
+});
 
 //Bootstrap models
 fs.readdirSync('./models').forEach(function(file) {
