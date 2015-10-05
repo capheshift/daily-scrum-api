@@ -32,7 +32,7 @@ app.set('view engine', 'ejs');
 app.use('/*', expressJwt({
     secret: config.JWTSecret
 }).unless({
-    path: ['/users/login', '/users/logout', '/users/signup']
+    path: ['/users/test', '/users/login', '/users/logout', '/users/signup']
 }));
 
 // CORS

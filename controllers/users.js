@@ -71,3 +71,10 @@ exports.queryLeanUser = function(req, res, next, id) {
 exports.queryUser = function(req, res, next, id) {
 
 };
+
+exports.test = function(req, res) {
+  res.jsonp({
+    statusCode: '0',
+    data: 'hello world !'
+  });
+};

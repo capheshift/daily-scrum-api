@@ -4,6 +4,7 @@ var UsersController = require('../controllers/users');
 var middleware = require('../config/middleware');
 
 /*GET*/
+router.get('/test', UsersController.test);
 router.get('/getUserById/:leanUserId',UsersController.getUserById);
 
 /*POST*/
