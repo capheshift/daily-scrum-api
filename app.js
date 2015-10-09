@@ -16,6 +16,8 @@ if (!process.env.NODE_ENV) {
 var app = express();
 
 //Connect database with mongoDB
+console.log('target-', config.Env[process.env.NODE_ENV].Database);
+console.log('env-', process.env.NODE_ENV);
 mongoose.connect(config.Env[process.env.NODE_ENV].Database);
 
 //Bootstrap models
