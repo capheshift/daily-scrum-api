@@ -211,3 +211,10 @@ exports.inactiveUserById = function(req, res) {
 	var user  = req.userData;
 	user.update
 };
+
+exports.test = function(req, res) {
+  res.jsonp({
+    statusCode: '0',
+    data: 'hello world !'
+  });
+};

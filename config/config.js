@@ -1,10 +1,12 @@
+'use strict';
+
 module.exports = {
     'Env': {
         'development': {
             'Database': 'mongodb://127.0.0.1/Daily-Scrum'
         },
         'production': {
-            'Database': 'mongodb://127.0.0.1/Daily-Scrum'
+            'Database': 'mongodb://heroku_1p1d0r7k:g2ov8l3sdia48o6ho2vlt8mufa@ds041623.mongolab.com:41623/heroku_1p1d0r7k'
         }
     },
 
@@ -28,5 +30,5 @@ module.exports = {
             'Active': 1,
             'Inactive': 2
         }
-    }  
+    }
 };

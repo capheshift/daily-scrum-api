@@ -11,7 +11,7 @@
     "express": "~4.13.1",
     "jade": "~1.11.0",
     "jsonwebtoken": "^4.2.1",
-    "mongoose": "3.8.10",
+    "mongoose": "^4.1.10",
     "mongoose-schema-extend": "^0.1.7",
     "morgan": "~1.6.1",
     "sanitizer": "^0.1.2",

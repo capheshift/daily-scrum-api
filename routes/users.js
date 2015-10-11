@@ -8,6 +8,7 @@ router.get('/', function(req, res) {
     res.jsonp('Daily-Scrum-api Users index');
 });
 router.get('/getUserById/:leanUserId', UsersController.getUserById);
+
 /*POST*/
 router.post('/signup', UsersController.signup);
 router.post('/login', UsersController.login);
