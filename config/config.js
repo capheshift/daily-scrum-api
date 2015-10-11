@@ -1,15 +1,18 @@
 module.exports = {
     'Env': {
         'development': {
-            'Database': 'mongodb://heroku_gl956tkn:812b5uooreqmh28r0p7uldnui9@ds051843.mongolab.com:51843/heroku_gl956tkn'
+            'Database': 'mongodb://127.0.0.1/Daily-Scrum'
         },
         'production': {
-            'Database': 'mongodb://heroku_gl956tkn:812b5uooreqmh28r0p7uldnui9@ds051843.mongolab.com:51843/heroku_gl956tkn'
+            'Database': 'mongodb://127.0.0.1/Daily-Scrum'
         }
     },
 
     'JWTSecret': 'Capheshift',
-    
+    'Populate': {
+        'User': 'username',
+        'UserFull': '-salt -hashed_password'
+    },
     'User': {
         'Types': {
             'Local': 1,

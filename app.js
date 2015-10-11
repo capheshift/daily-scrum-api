@@ -10,15 +10,13 @@ var expressJwt = require('express-jwt');
 
 
 if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'production';
+    process.env.NODE_ENV = 'development';
 }
 
 var app = express();
 
 //Connect database with mongoDB
-app.configure('production', function() {
-  mongoose.connect('mongodb://' + process.env.MONGOLAB_URI + '/daily-scrum-api');
-});
+mongoose.connect(config.Env[process.env.NODE_ENV].Database);
 
 //Bootstrap models
 fs.readdirSync('./models').forEach(function(file) {

@@ -4,20 +4,23 @@ var UsersController = require('../controllers/users');
 var middleware = require('../config/middleware');
 
 /*GET*/
-router.get('/getUserById/:leanUserId',UsersController.getUserById);
-router.get('/',function(req,res){
-	res.jsonp('Nguyen van son');
+router.get('/', function(req, res) {
+    res.jsonp('Daily-Scrum-api Users index');
 });
+router.get('/getUserById/:leanUserId', UsersController.getUserById);
 /*POST*/
-router.post('/signup',UsersController.signup);
-router.post('/login',UsersController.login);
-router.post('logout',UsersController.logout);
+router.post('/signup', UsersController.signup);
+router.post('/login', UsersController.login);
+router.post('/logout', UsersController.logout);
 
 /*PUT*/
-router.put('/changePassword/:userId',UsersController.changePassword);
+router.put('/changePassword/:userId',middleware.isAuthentication, UsersController.changePassword);
 
 /*DELETE*/
-router.param('leanUserId',UsersController.queryLeanUser);//Lean
-router.param('userId',UsersController.queryUser);
+router.delete('/inactiveUserById/:userId',middleware.isAuthentication,UsersController.inactiveUserById);
+
+/*PARAM*/
+router.param('leanUserId', UsersController.queryLeanUser); //Lean
+router.param('userId', UsersController.queryUser);
 
 module.exports = router;

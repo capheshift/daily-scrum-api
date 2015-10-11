@@ -25,7 +25,7 @@ var validatePassword = function(value, callback) {
 };
 
 var UserSchema = new Schema({
-    userName: {
+    username: {
         type: String,
         unique: true,
         require: true,
@@ -43,10 +43,10 @@ var UserSchema = new Schema({
         require: true,
         validate: [validatePassword, 'Password cannot be blank']
     },
-    firstName: {
+    firstname: {
         type: String
     },
-    lastName: {
+    lastname: {
         type: String
     },
     birthday: {
@@ -63,6 +63,7 @@ var UserSchema = new Schema({
         type: Date,
         defaults: Date.now
     },
+    status: String,
     salt: String
 }, {
     collection: ' users'
@@ -95,6 +96,33 @@ UserSchema.methods = {
     },
     checkLogin: function(password) {
         return (encrypt(password, this.salt) === this.hashed_password);
+    }
+};
+
+//Statics
+UserSchema.statics = {
+    getFullInformations: function(user, userId, callback) {
+        var data = {
+            'username': user.username,
+            'email': user.email,
+            'firstname': user.firstname,
+            'lastname': user.lastname
+        }
+        return callback(data);
+    },
+    getInfomationById:function(targetId,userId,callback){
+        var that =this;
+        that.findOne({
+            '_id':targetId
+        }).select(Config.Populate.User).lean().exec(function(err,u){
+            if (err) {
+                return callback({});
+            }else{
+                that.getFullInformations(u,userId,function(user){
+                    return callback(user);
+                });
+            }
+        });
     }
 };
 

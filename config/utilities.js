@@ -3,7 +3,7 @@ var fs = require('fs');
 var checkForHexRegExp = new RegExp('^[0-9a-fA-F]{24}$');
 var chars = '0123456789';
 
-exports.validateObject = function(id,callback){
+exports.validateObjectId = function(id,callback){
 	return callback(checkForHexRegExp.test(id));
 };	
 
