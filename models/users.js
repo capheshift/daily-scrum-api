@@ -107,7 +107,7 @@ UserSchema.statics = {
             'email': user.email,
             'firstname': user.firstname,
             'lastname': user.lastname
-        }
+        };
         return callback(data);
     },
     getInfomationById:function(targetId,userId,callback){
