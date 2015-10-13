@@ -209,7 +209,8 @@ exports.changePassword = function(req, res) {
 //Inactive user by userId
 exports.inactiveUserById = function(req, res) {
 	var user  = req.userData;
-	user.update
+	// user.update
+  res.json({});
 };
 
 exports.test = function(req, res) {
