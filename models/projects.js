@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var utils = require('../config/utilities');
+var config = require('../config/config');
 var Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
