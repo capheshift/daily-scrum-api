@@ -71,6 +71,9 @@ fs.readdirSync('./models').forEach(function(file) {
 });
 
 var users = require('./routes/users');
+var tasks=require('./routes/tasks');
+var projects =require('./routes/projects');
+
 
 app.use('/users', users);
 
