@@ -27,6 +27,24 @@ module.exports = function(bll)
   };
 
   /**
+   * [_getAll description]
+   * @param  {[type]}   req  [description]
+   * @param  {[type]}   res  [description]
+   * @param  {Function} next [description]
+   * @return {[type]}        [description]
+   */
+  var _getAll = function(req, res, next) {
+
+    bll.find({}).exec().then(
+    function(data) {
+      res.json(data);
+    },
+    function(err) {
+      res.json(err);
+    });
+  };
+
+  /**
    * [_post description]
    * @param  {[type]}   req  [description]
    * @param  {[type]}   res  [description]
@@ -59,5 +77,10 @@ module.exports = function(bll)
   };
 
   return {
+    _get: _get,
+    _getAll: _getAll,
+    _post: _post,
+    _put: _put,
+    _delete: _delete
   };
 };

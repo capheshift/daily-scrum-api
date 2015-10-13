@@ -1,16 +1,26 @@
 var express = require('express');
 var router = express.Router();
-var ProjectsController = require('../controllers/projects');
+var controllers = require('../controllers/projects');
 
-/*GET*/
-router.get('/getProjectById',ProjectsController.getProjectById);
-router.get('/getAllProjectByUserId',ProjectsController.getAllProjectByUserId);
+router.get('/', controllers._get);
+router.get('/getAll', controllers._getAll);
+router.get('/test', controllers.test);
 
-/*POST*/
-router.post('/createProject',ProjectsController.createProject);
+router.post('/', controllers._post);
+router.put('/', controllers._put);
+router.delete('/', controllers._delete);
 
-/*PUT*/
-router.put('/updateProject',ProjectsController.updateProject);
+module.exports = router;
 
-/*DELETE*/
-router.delete('/deleteProject',ProjectsController.deleteProject);
+// /*GET*/
+// router.get('/getProjectById',ProjectsController.getProjectById);
+// router.get('/getAllProjectByUserId',ProjectsController.getAllProjectByUserId);
+
+// /*POST*/
+// router.post('/createProject',ProjectsController.createProject);
+
+// /*PUT*/
+// router.put('/updateProject',ProjectsController.updateProject);
+
+// /*DELETE*/
+// router.delete('/deleteProject',ProjectsController.deleteProject);
