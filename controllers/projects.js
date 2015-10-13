@@ -21,24 +21,3 @@ module.exports = exports = _.assign(RestApi(Projects), {
     });
   }
 });
-
-
-// exports.getProjectById = function(req,res){
-
-// };
-
-// exports.getAllProjectByUserId = function(req,res){
-
-// };
-
-// exports.createProject = function(req,res){
-
-// };
-
-// exports.updateProject=function(req,res){
-
-// };
-
-// exports.deleteProject = function(req,res){
-
-// };

@@ -8,7 +8,7 @@ var utils = require('../config/utilities');
 module.exports = function(bll)
 {
   /**
-   * get method: abc/{id}
+   * method for return only one item
    * @param  {[type]}   req  [description]
    * @param  {[type]}   res  [description]
    * @param  {Function} next [description]
@@ -27,7 +27,7 @@ module.exports = function(bll)
   };
 
   /**
-   * [_getAll description]
+   * return a list collection matched with query
    * @param  {[type]}   req  [description]
    * @param  {[type]}   res  [description]
    * @param  {Function} next [description]
@@ -45,15 +45,27 @@ module.exports = function(bll)
   };
 
   /**
-   * [_post description]
+   * create a new collection
    * @param  {[type]}   req  [description]
    * @param  {[type]}   res  [description]
    * @param  {Function} next [description]
-   * @return {[type]}        [description]
+   * @return {collection} new collection return from server
    */
   var _post = function(req, res, next) {
     var params = req.params;
     var body = req.body;
+    console.log('_post', body);
+
+    bll.create(body).then(function(data) {
+      res.json({
+        data: data
+      });
+    },
+    function(err) {
+      res.json({
+        err: err
+      });
+    });
   };
 
   /**

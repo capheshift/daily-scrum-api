@@ -40,7 +40,8 @@ app.use('/*', expressJwt({
       '/users/logout',
       '/users/signup',
       '/projects/getAll',
-      '/projects/test'
+      '/projects/test',
+      '/projects'
     ]
 }));
 
