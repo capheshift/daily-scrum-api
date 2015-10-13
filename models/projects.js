@@ -1,10 +1,24 @@
 var mongoose = require('mongoose');
-var Schema= mongoose.Schema;
-var Utilities = require('../config/utilities');
-var Config = require('../config/config');
+var utils = require('../config/utilities');
+var config = require('../config/config');
+var Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
+  name: {
+    type: String,
+    require: true,
+    trim: true
+  },
 
+  scrumMaster: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users'
+  },
+
+  createdDate: {
+    type: Date,
+    defaults: Date.now
+  }
 });
 
-module.exports = mongoose.model('Projects',ProjectSchema);
+module.exports = mongoose.model('Projects', ProjectSchema);

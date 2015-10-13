@@ -73,7 +73,7 @@ exports.getUserById = function(req, res) {
     var userId = req.user ? req.user._id.toString() : '';
     Users.getFullInformations(req.userData, userId, function(data) {
         return res.jsonp(Utilities.response(true, data));
-    })
+    });
 };
 
 exports.signup = function(req, res) {

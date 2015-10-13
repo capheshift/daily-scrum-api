@@ -34,7 +34,15 @@ app.set('view engine', 'ejs');
 app.use('/*', expressJwt({
     secret: config.JWTSecret
 }).unless({
-    path: ['/users/test', '/users/login', '/users/logout', '/users/signup']
+    path: [
+      '/users/test',
+      '/users/login',
+      '/users/logout',
+      '/users/signup',
+      '/projects/getAll',
+      '/projects/test',
+      '/projects'
+    ]
 }));
 
 // CORS
@@ -71,11 +79,12 @@ fs.readdirSync('./models').forEach(function(file) {
 });
 
 var users = require('./routes/users');
-var tasks=require('./routes/tasks');
-var projects =require('./routes/projects');
-
+var tasks = require('./routes/tasks');
+var projects = require('./routes/projects');
 
 app.use('/users', users);
+app.use('/tasks', tasks);
+app.use('/projects', projects);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
