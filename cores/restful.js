@@ -2,7 +2,6 @@
  * capheshfit
  * @author Tw
  */
-
 var utils = require('../config/utilities');
 
 module.exports = function(bll)
@@ -69,13 +68,27 @@ module.exports = function(bll)
   };
 
   /**
-   * [_put description]
+   * update a collection
+   * params: id
+   * body: collection attributes
    * @param  {[type]}   req  [description]
    * @param  {[type]}   res  [description]
    * @param  {Function} next [description]
-   * @return {[type]}        [description]
+   * @return new collection from server
    */
   var _put = function(req, res, next) {
+    var id = req.params.id;
+    var body = req.body;
+
+    bll.update({_id: id}, { $set: body }).exec().then(function(data) {
+      res.json({
+        data: data
+      });
+    }, function(err) {
+      res.json({
+        err: err
+      });
+    });
   };
 
   /**
@@ -86,6 +99,16 @@ module.exports = function(bll)
    * @return {[type]}        [description]
    */
   var _delete = function(req, res, next) {
+    var id = req.params.id;
+    bll.remove({_id: id}).exec().then(function(data) {
+      res.json({
+        data: data
+      });
+    }, function(err) {
+      res.json({
+        err: err
+      });
+    });
   };
 
   return {
