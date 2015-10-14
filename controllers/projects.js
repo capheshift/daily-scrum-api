@@ -1,4 +1,4 @@
-// capheshift
+// capheshift.github.io 2015
 // @author: Tw
 
 var _ = require('lodash');
