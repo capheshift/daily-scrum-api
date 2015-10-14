@@ -31,19 +31,19 @@ fs.readdirSync('./models').forEach(function(file) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use('/*', expressJwt({
-    secret: config.JWTSecret
-}).unless({
-    path: [
-      '/users/test',
-      '/users/login',
-      '/users/logout',
-      '/users/signup',
-      '/projects/getAll',
-      '/projects/test',
-      '/projects'
-    ]
-}));
+// app.use('/*', expressJwt({
+//     secret: config.JWTSecret
+// }).unless({
+//     path: [
+//       '/users/test',
+//       '/users/login',
+//       '/users/logout',
+//       '/users/signup',
+//       '/projects/getAll',
+//       '/projects/test',
+//       '/projects'
+//     ]
+// }));
 
 // CORS
 app.use(function(req, res, next) {
@@ -79,10 +79,12 @@ fs.readdirSync('./models').forEach(function(file) {
 });
 
 var users = require('./routes/users');
+var userProject = require('./routes/user-project');
 var tasks = require('./routes/tasks');
 var projects = require('./routes/projects');
 
 app.use('/users', users);
+app.use('/user-project', userProject);
 app.use('/tasks', tasks);
 app.use('/projects', projects);
 

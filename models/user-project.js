@@ -6,14 +6,14 @@ var utils = require('../config/utilities');
 var config = require('../config/config');
 var Schema = mongoose.Schema;
 
-var ProjectSchema = new Schema({
-  name: {
-    type: String,
-    require: true,
-    trim: true
+var UserProjectSchema = new Schema({
+
+  _project: {
+    type: Schema.Types.ObjectId,
+    ref: 'Projects'
   },
 
-  scrumMaster: {
+  _user: {
     type: Schema.Types.ObjectId,
     ref: 'Users'
   },
@@ -24,4 +24,4 @@ var ProjectSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Projects', ProjectSchema);
+module.exports = mongoose.model('UserProject', UserProjectSchema);

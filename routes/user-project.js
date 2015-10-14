@@ -3,7 +3,7 @@
 
 var express = require('express');
 var router = express.Router();
-var ctrl = require('../controllers/projects');
+var ctrl = require('../controllers/user-project');
 
 // function for set of collection
 router.get('/test', ctrl.test);
