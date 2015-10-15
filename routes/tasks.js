@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var TasksController = require('../controllers/tasks'); 
+var TasksController = require('../controllers/tasks');
 
 /*GET*/
 router.get('/getTaskById/:taskId',TasksController.getTaskById);

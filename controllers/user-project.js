@@ -3,12 +3,12 @@
 
 var _ = require('lodash');
 var mongoose = require('mongoose');
-var Projects = mongoose.model('Projects');
+var UserProject = mongoose.model('UserProject');
 var Utilities = require('../config/utilities');
 var Config = require('../config/config');
 var RestApi = require('../cores/restful');
 
-module.exports = exports = _.assign(RestApi(Projects), {
+module.exports = exports = _.assign(RestApi(UserProject), {
   // more custom function will be here
   /**
    * getAll: function() {
