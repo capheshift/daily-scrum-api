@@ -24,7 +24,7 @@ var TaskSchema = new Schema({
 
 	estimation: Number
 }, {
-	collection: 'users'
+	collection: 'tasks'
 });
 
 module.exports = mongoose.model('Tasks', TaskSchema);

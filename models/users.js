@@ -66,7 +66,7 @@ var UserSchema = new Schema({
 	status: String,
 	salt: String
 }, {
-	collection: ' users'
+	collection: 'users'
 });
 
 UserSchema.virtual('password').set(function(password) {
