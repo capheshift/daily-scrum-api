@@ -5,7 +5,7 @@ var middleware = require('../config/middleware');
 
 /*GET*/
 router.get('/', function(req, res) {
-    res.jsonp('Daily-Scrum-api Users index');
+	res.jsonp('Daily-Scrum-api Users index');
 });
 router.get('/getUserById/:leanUserId', UsersController.getUserById);
 
@@ -15,10 +15,10 @@ router.post('/login', UsersController.login);
 router.post('/logout', UsersController.logout);
 
 /*PUT*/
-router.put('/changePassword/:userId',middleware.isAuthentication, UsersController.changePassword);
+router.put('/changePassword/:userId', middleware.isAuthentication, UsersController.changePassword);
 
 /*DELETE*/
-router.delete('/inactiveUserById/:userId',middleware.isAuthentication,UsersController.inactiveUserById);
+router.delete('/inactiveUserById/:userId', middleware.isAuthentication, UsersController.inactiveUserById);
 
 /*PARAM*/
 router.param('leanUserId', UsersController.queryLeanUser); //Lean

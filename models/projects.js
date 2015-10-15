@@ -7,21 +7,21 @@ var config = require('../config/config');
 var Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
-  name: {
-    type: String,
-    require: true,
-    trim: true
-  },
+	name: {
+		type: String,
+		require: true,
+		trim: true
+	},
 
-  scrumMaster: {
-    type: Schema.Types.ObjectId,
-    ref: 'Users'
-  },
+	scrumMaster: {
+		type: Schema.Types.ObjectId,
+		ref: 'Users'
+	},
 
-  createdDate: {
-    type: Date,
-    defaults: Date.now
-  }
+	createdDate: {
+		type: Date,
+		defaults: Date.now
+	}
 });
 
 module.exports = mongoose.model('Projects', ProjectSchema);
