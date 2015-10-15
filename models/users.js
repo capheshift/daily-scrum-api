@@ -54,14 +54,14 @@ var UserSchema = new Schema({
 	},
 	avatar: {
 		type: String,
-		defaults: 'son.png'
+		default: 'son.png'
 	},
 	role: {
 		type: String
 	},
 	createdDate: {
 		type: Date,
-		defaults: Date.now
+		default: Date.now
 	},
 	status: String,
 	salt: String

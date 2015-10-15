@@ -7,16 +7,21 @@ var TaskSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Users'
 	},
+
 	isCompleted: {
 		type: Boolean,
 		default: false
 	},
+
 	date: String,
+
 	content: String,
-	createAt: {
+
+	createdDate: {
 		type: Date,
 		default: Date.now
 	},
+
 	estimation: Number
 }, {
 	collection: 'users'

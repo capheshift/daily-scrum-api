@@ -20,7 +20,7 @@ var UserProjectSchema = new Schema({
 
 	createdDate: {
 		type: Date,
-		defaults: Date.now
+		default: Date.now
 	}
 });
 
