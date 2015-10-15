@@ -71,11 +71,12 @@ fs.readdirSync('./models').forEach(function(file) {
 });
 
 var users = require('./routes/users');
-var tasks=require('./routes/tasks');
+var tasks = require('./routes/tasks');
 var projects =require('./routes/projects');
 
 
 app.use('/users', users);
+app.use('/tasks', tasks);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

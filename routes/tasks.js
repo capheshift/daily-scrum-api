@@ -3,7 +3,7 @@ var router = express.Router();
 var TasksController = require('../controllers/tasks'); 
 
 /*GET*/
-router.get('/getTaskById',TasksController.getTaskById);
+router.get('/getTaskById/:taskId',TasksController.getTaskById);
 router.get('/getTaskByUserId',TasksController.getTaskByUserId);
 
 /*POST*/
@@ -15,3 +15,4 @@ router.put('/updateTask',TasksController.updateTask);
 /*DELETE*/
 router.delete('/deleteTask',TasksController.deleteTask);
 
+module.exports = router;
