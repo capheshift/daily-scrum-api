@@ -8,10 +8,12 @@ exports.validateObjectId = function(id, callback) {
 };
 
 exports.response = function(success, data, message, statusCode) {
+	var status = success ? '1' : '0';
 	return {
 		'success': success,
+		'status': status,
 		'statusCode': statusCode ? statusCode : 200,
-		'message': message ? message : 'Successfully',
+		'message': message ? message : 'successfully',
 		'data': data ? data : {}
 	};
 };

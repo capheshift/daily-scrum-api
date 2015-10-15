@@ -8,11 +8,9 @@ var debug = require('debug')('corerest');
 module.exports = function(bll)
 {
 	/**
-	 * method for return only one item
-	 * @param  {[type]}   req  [description]
-	 * @param  {[type]}   res  [description]
-	 * @param  {Function} next [description]
-	 * @return {[type]}        [description]
+	 * GET method for return only one item
+	 * @return specific collection
+	 * params._id
 	 */
 	var _get = function(req, res, next) {
 		var id = req.params._id;
@@ -20,56 +18,53 @@ module.exports = function(bll)
 
 		bll.findOne({_id: id}).exec().then(
 		function(data) {
-			res.json(data);
+			res.jsonp(utils.response(true, data));
 		},
 		function(err) {
-			res.json(err);
+			res.jsonp(utils.response(false, null, err));
 		});
 	};
 
 	/**
-	 * return a list collection matched with query
-	 * @param  {[type]}   req  [description]
-	 * @param  {[type]}   res  [description]
-	 * @param  {Function} next [description]
-	 * @return {[type]}        [description]
+	 * GET method to get all of collection
+	 * @return a list collection matched with query
+	 * params --
 	 */
 	var _getAll = function(req, res, next) {
 		debug('_getAll');
 
 		bll.find({}).exec().then(
 		function(data) {
-			res.json(data);
+			res.jsonp(utils.response(true, data));
 		},
 		function(err) {
-			res.json(err);
+			res.jsonp(utils.response(false, null, err));
 		});
 	};
 
 	/**
-	 * [_find description]
-	 * @param  {[type]}   req  [description]
-	 * @param  {[type]}   res  [description]
-	 * @param  {Function} next [description]
-	 * @return {[type]}        [description]
+	 * GET method
+	 * @return a set of collection
+	 * req.query.q - is a query request
+	 * req.query.l - is a pagin request
 	 */
 	var _find = function(req, res, next) {
-		var query = req.params.query;
-		debug('_find', query);
+		var query = JSON.parse(req.query.q);
+		var limit = JSON.parse(req.query.l);
+		debug('_find query', query);
+		debug('_find limit', limit);
 
 		bll.find(query).exec().then(function(data) {
-			res.json({data: data});
+			res.jsonp(utils.response(true, data));
 		}, function(err) {
-			res.json({err: err});
+			res.jsonp(utils.response(false, null, err));
 		});
 	};
 
 	/**
-	 * create a new collection
-	 * @param  {[type]}   req  [description]
-	 * @param  {[type]}   res  [description]
-	 * @param  {Function} next [description]
+	 * POST method, create a new collection
 	 * @return {collection} new collection return from server
+	 * req.body
 	 */
 	var _post = function(req, res, next) {
 		var params = req.params;
@@ -78,25 +73,18 @@ module.exports = function(bll)
 		debug('_post', body);
 
 		bll.create(body).then(function(data) {
-			res.json({
-				data: data
-			});
+			res.jsonp(utils.response(true, data));
 		},
 		function(err) {
-			res.json({
-				err: err
-			});
+			res.jsonp(utils.response(false, null, err));
 		});
 	};
 
 	/**
-	 * update a collection
-	 * params: id
-	 * body: collection attributes
-	 * @param  {[type]}   req  [description]
-	 * @param  {[type]}   res  [description]
-	 * @param  {Function} next [description]
-	 * @return new collection from server
+	 * PUT method to update a collection
+	 * @return new collection, that returned from server
+	 * params._id
+	 * req.body
 	 */
 	var _put = function(req, res, next) {
 		var id = req.params._id;
@@ -105,35 +93,25 @@ module.exports = function(bll)
 		debug('_put', body);
 
 		bll.findByIdAndUpdate(id, body).exec().then(function(data) {
-			res.json({
-				data: data
-			});
+			res.jsonp(utils.response(true, data));
 		}, function(err) {
-			res.json({
-				err: err
-			});
+			res.jsonp(utils.response(false, null, err));
 		});
 	};
 
 	/**
-	 * [_delete description]
-	 * @param  {[type]}   req  [description]
-	 * @param  {[type]}   res  [description]
-	 * @param  {Function} next [description]
-	 * @return {[type]}        [description]
+	 * DELETE method to delete a collection
+	 * @return
+	 * params._id
 	 */
 	var _delete = function(req, res, next) {
 		var id = req.params._id;
 		debug('_delete', id);
 
 		bll.remove({_id: id}).exec().then(function(data) {
-			res.json({
-				data: data
-			});
+			res.jsonp(utils.response(true, data));
 		}, function(err) {
-			res.json({
-				err: err
-			});
+			res.jsonp(utils.response(false, null, err));
 		});
 	};
 
