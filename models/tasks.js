@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var TaskSchema = new Schema({
-	_userId: {
+	_user: {
 		required: true,
 		type: Schema.Types.ObjectId,
 		ref: 'Users'
@@ -13,18 +13,30 @@ var TaskSchema = new Schema({
 		default: false
 	},
 
-	date: String,
+	date: {
+		type: String
+	},
 
-	content: String,
+	content: {
+		type: String
+	},
+
+	estimation: {
+		type: Number
+	},
 
 	createdDate: {
 		type: Date,
 		default: Date.now
 	},
-
-	estimation: Number
 }, {
 	collection: 'tasks'
 });
+
+TaskSchema.statics = {
+	getPopulateFields: function() {
+		return '_user';
+	}
+};
 
 module.exports = mongoose.model('Tasks', TaskSchema);

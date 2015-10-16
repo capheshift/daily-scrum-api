@@ -4,13 +4,11 @@ var Crypto = require('crypto');
 var Utilities = require('../config/utilities');
 var Config = require('../config/config');
 var async = require('async');
+var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 var validateUserName = function(value, callback) {
 	return callback(value && (value.length >= 3) && (value.length <= 32));
 };
-
-var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
 
 var validateUniqueEmail = function(value, callback) {
 	mongoose.model('Users').find({
@@ -23,6 +21,12 @@ var validateUniqueEmail = function(value, callback) {
 var validatePassword = function(value, callback) {
 	return callback(value && value.length);
 };
+
+// Encrypt password
+function encrypt(password, salt) {
+	var saltHash = new Buffer(salt, 'base64');
+	return Crypto.pbkdf2Sync(password, saltHash, 10000, 64).toString('base64');
+}
 
 var UserSchema = new Schema({
 	username: {
@@ -63,8 +67,12 @@ var UserSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	status: String,
-	salt: String
+	status: {
+		type: String
+	},
+	salt: {
+		type: String
+	}
 }, {
 	collection: 'users'
 });
@@ -76,12 +84,6 @@ UserSchema.virtual('password').set(function(password) {
 }).get(function() {
 	return this._password;
 });
-
-// Encrypt password
-function encrypt(password, salt) {
-	var saltHash = new Buffer(salt, 'base64');
-	return Crypto.pbkdf2Sync(password, saltHash, 10000, 64).toString('base64');
-}
 
 //Document methods
 UserSchema.methods = {
@@ -110,6 +112,7 @@ UserSchema.statics = {
 		};
 		return callback(data);
 	},
+
 	getInfomationById: function(targetId, userId, callback) {
 		var that = this;
 		that.findOne({
@@ -123,6 +126,10 @@ UserSchema.statics = {
 				});
 			}
 		});
+	},
+
+	getPopulateFields: function() {
+		return '';
 	}
 };
 

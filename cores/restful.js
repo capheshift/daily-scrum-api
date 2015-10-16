@@ -5,8 +5,11 @@
 var utils = require('../config/utilities');
 var debug = require('debug')('corerest');
 
-module.exports = function(bll)
-{
+module.exports = function(bll) {
+	var populateStr = '';
+	populateStr = bll && bll.getPopulateFields && bll.getPopulateFields();
+	debug('populate', populateStr);
+
 	/**
 	 * GET method for return only one item
 	 * @return specific collection
@@ -16,7 +19,7 @@ module.exports = function(bll)
 		var id = req.params._id;
 		debug('_get', id);
 
-		bll.findOne({_id: id}).exec().then(
+		bll.findOne({_id: id}).populate(populateStr).exec().then(
 		function(data) {
 			res.jsonp(utils.response(true, data));
 		},
@@ -33,7 +36,7 @@ module.exports = function(bll)
 	var _getAll = function(req, res, next) {
 		debug('_getAll');
 
-		bll.find({}).exec().then(
+		bll.find({}).populate(populateStr).exec().then(
 		function(data) {
 			res.jsonp(utils.response(true, data));
 		},
@@ -54,7 +57,7 @@ module.exports = function(bll)
 		debug('_find query', query);
 		debug('_find limit', limit);
 
-		bll.find(query).exec().then(function(data) {
+		bll.find(query).populate(populateStr).exec().then(function(data) {
 			res.jsonp(utils.response(true, data));
 		}, function(err) {
 			res.jsonp(utils.response(false, null, err));
@@ -92,7 +95,7 @@ module.exports = function(bll)
 		debug('_put', id);
 		debug('_put', body);
 
-		bll.findByIdAndUpdate(id, body).exec().then(function(data) {
+		bll.findByIdAndUpdate(id, body).populate(populateStr).exec().then(function(data) {
 			res.jsonp(utils.response(true, data));
 		}, function(err) {
 			res.jsonp(utils.response(false, null, err));
@@ -108,7 +111,7 @@ module.exports = function(bll)
 		var id = req.params._id;
 		debug('_delete', id);
 
-		bll.remove({_id: id}).exec().then(function(data) {
+		bll.remove({_id: id}).populate(populateStr).exec().then(function(data) {
 			res.jsonp(utils.response(true, data));
 		}, function(err) {
 			res.jsonp(utils.response(false, null, err));

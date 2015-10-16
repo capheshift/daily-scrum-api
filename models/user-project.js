@@ -24,4 +24,10 @@ var UserProjectSchema = new Schema({
 	}
 });
 
+UserProjectSchema.statics = {
+	getPopulateFields: function() {
+		return '_user _project';
+	}
+};
+
 module.exports = mongoose.model('UserProject', UserProjectSchema);

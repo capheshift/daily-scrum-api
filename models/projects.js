@@ -13,7 +13,7 @@ var ProjectSchema = new Schema({
 		trim: true
 	},
 
-	scrumMaster: {
+	_scrumMaster: {
 		type: Schema.Types.ObjectId,
 		ref: 'Users'
 	},
@@ -23,5 +23,11 @@ var ProjectSchema = new Schema({
 		default: Date.now
 	}
 });
+
+ProjectSchema.statics = {
+	getPopulateFields: function() {
+		return '_scrumMaster';
+	}
+};
 
 module.exports = mongoose.model('Projects', ProjectSchema);
