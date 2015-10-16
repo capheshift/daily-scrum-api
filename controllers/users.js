@@ -149,22 +149,22 @@ exports.login = function(req, res) {
             return cb(!user.checkLogin(password), 'Incorrect username or password');
         },
         getUserInformations: function(cb) {
-                Users.getFullInformations(user, null, function(data) {
-                    user = data;
-                    return cb(null);
-                });
-            }
-            // createToken: function(cb) {
-            //     var profile = {
-            //         _id: user._id,
-            //         username: user.username,
-            //         role: user.role
-            //     };
-            //     //Create token
-            //     var token = jwt.sign(profile, Config.JWTSecret);
-            //     user.token = token;
-            //     return cb(null);
-            // }
+            Users.getFullInformations(user, null, function(data) {
+                user = data;
+                return cb(null);
+            });
+        },
+        createToken: function(cb) {
+            var profile = {
+                _id: user._id,
+                username: user.username,
+                role: user.role
+            };
+            //Create token
+            var token = jwt.sign(profile, Config.JWTSecret);
+            user.token = token;
+            return cb(null);
+        }
     }, function(err, results) {
         if (err) {
             var keys = Object.keys(results);
@@ -208,14 +208,14 @@ exports.changePassword = function(req, res) {
 
 //Inactive user by userId
 exports.inactiveUserById = function(req, res) {
-	var user  = req.userData;
-	// user.update
-  res.json({});
+    var user = req.userData;
+    // user.update
+    res.json({});
 };
 
 exports.test = function(req, res) {
-  res.jsonp({
-    statusCode: '0',
-    data: 'hello world !'
-  });
+    res.jsonp({
+        statusCode: '0',
+        data: 'hello world !'
+    });
 };

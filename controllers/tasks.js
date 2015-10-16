@@ -4,13 +4,13 @@ var Config = require('../config/config');
 var Utilities = require('../config/utilities');
 
 exports.getTaskById = function(req, res) {
-	Tasks.findById(req.params.taskId,function(err,task){
-		if (err) {
-			return res.jsonp(Utilities.response(false,{},'Do not get Task by taskId',404));
-		}else{
-			return res.jsonp(Utilities.response(true,task));
-		}
-	})
+    Tasks.findById(req.params.taskId, function(err, task) {
+        if (err) {
+            return res.jsonp(Utilities.response(false, {}, 'Do not get Task by taskId', 404));
+        } else {
+            return res.jsonp(Utilities.response(true, task));
+        }
+    })
 };
 
 exports.getTaskByUserId = function(req, res) {
@@ -45,12 +45,18 @@ exports.createTask = function(req, res) {
 };
 
 exports.updateTask = function(req, res) {
-
+    Tasks.findByIdAndUpdate(req.params.taskId, req.body, function(err, note) {
+        if (err) {
+            return res.jsonp(Utilities.response(false, {}, 'Do not delete Task ', 404));
+        } else {
+            return res.jsonp(true, 'Deleted');
+        }
+    });
 };
 
 exports.deleteTask = function(req, res) {
     Tasks.findByIdAndRemove(
-        req.user._id.toString(),
+        req.params.taskId,
         function(err) {
             if (err) {
                 return res.jsonp(Utilities.response(false, {}, 'Do not delete Task ', 404));
