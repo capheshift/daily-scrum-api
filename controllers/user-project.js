@@ -9,15 +9,15 @@ var Config = require('../config/config');
 var RestApi = require('../cores/restful');
 
 module.exports = exports = _.assign(RestApi(UserProject), {
-  // more custom function will be here
-  /**
-   * getAll: function() {
-   *   return {};
-   * }
-   */
-  test: function(req, res) {
-    res.json({
-      status: 'OK'
-    });
-  }
+	// more custom function will be here
+	/**
+	 * getAll: function() {
+	 *   return {};
+	 * }
+	 */
+	test: function(req, res) {
+		res.json({
+			status: 'OK'
+		});
+	}
 });

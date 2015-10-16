@@ -8,20 +8,20 @@ var Schema = mongoose.Schema;
 
 var UserProjectSchema = new Schema({
 
-  _project: {
-    type: Schema.Types.ObjectId,
-    ref: 'Projects'
-  },
+	_project: {
+		type: Schema.Types.ObjectId,
+		ref: 'Projects'
+	},
 
-  _user: {
-    type: Schema.Types.ObjectId,
-    ref: 'Users'
-  },
+	_user: {
+		type: Schema.Types.ObjectId,
+		ref: 'Users'
+	},
 
-  createdDate: {
-    type: Date,
-    defaults: Date.now
-  }
+	createdDate: {
+		type: Date,
+		default: Date.now
+	}
 });
 
 module.exports = mongoose.model('UserProject', UserProjectSchema);

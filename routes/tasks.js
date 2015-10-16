@@ -1,18 +1,20 @@
 var express = require('express');
 var router = express.Router();
-var TasksController = require('../controllers/tasks');
+var ctrl = require('../controllers/tasks');
 
-/*GET*/
-router.get('/getTaskById/:taskId',TasksController.getTaskById);
-router.get('/getTaskByUserId',TasksController.getTaskByUserId);
+router.get('/getTaskById/:taskId', ctrl.getTaskById);
+router.get('/getTaskByUserId', ctrl.getTaskByUserId);
+router.post('/createTask', ctrl.createTask);
+router.put('/updateTask', ctrl.updateTask);
+router.delete('/deleteTask', ctrl.deleteTask);
 
-/*POST*/
-router.post('/createTask',TasksController.createTask);
-
-/*PUT*/
-router.put('/updateTask',TasksController.updateTask);
-
-/*DELETE*/
-router.delete('/deleteTask',TasksController.deleteTask);
+// function for set of collection
+router.get('/all', ctrl._getAll);
+router.get('/find', ctrl._find);
+router.get('/:_id/detail', ctrl._get);
+// functions for special collection
+router.post('/', ctrl._post);
+router.put('/:_id', ctrl._put);
+router.delete('/:_id', ctrl._delete);
 
 module.exports = router;
