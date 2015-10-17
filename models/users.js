@@ -47,6 +47,10 @@ var UserSchema = new Schema({
 		require: true,
 		validate: [validatePassword, 'Password cannot be blank']
 	},
+	fullName: {
+		type: String,
+		default: 'Scrum Member'
+	},
 	firstname: {
 		type: String
 	},
@@ -58,7 +62,7 @@ var UserSchema = new Schema({
 	},
 	avatar: {
 		type: String,
-		default: 'son.png'
+		default: ''
 	},
 	role: {
 		type: String
@@ -107,8 +111,7 @@ UserSchema.statics = {
 		var data = {
 			'username': user.username,
 			'email': user.email,
-			'firstname': user.firstname,
-			'lastname': user.lastname
+			'fullName': user.fullName,
 		};
 		return callback(data);
 	},
