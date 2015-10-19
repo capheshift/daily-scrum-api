@@ -112,6 +112,7 @@ UserSchema.statics = {
 			'username': user.username,
 			'email': user.email,
 			'fullName': user.fullName,
+			'_id': user._id
 		};
 		return callback(data);
 	},
