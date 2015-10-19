@@ -8,6 +8,12 @@ var TaskSchema = new Schema({
 		ref: 'Users'
 	},
 
+	_project: {
+		required: true,
+		type: Schema.Types.ObjectId,
+		ref: 'Projects'
+	},
+
 	isCompleted: {
 		type: Boolean,
 		default: false
@@ -35,7 +41,7 @@ var TaskSchema = new Schema({
 
 TaskSchema.statics = {
 	getPopulateFields: function() {
-		return '_user';
+		return '_user _project';
 	}
 };
 
